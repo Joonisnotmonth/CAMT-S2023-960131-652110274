@@ -1,9 +1,179 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Display position note</title>
-    </head>
-    <body>
-        <h1>Box Model</h1>
-    </body>
+  <head>
+    <title>Display position note</title>
+    <style>
+      * {
+        margin: 0 px;
+        padding: 0 px;
+      }
+      .box {
+        padding: 15px;
+        background: yellow;
+        background-clip: content-box;
+        margin: 25px;
+        width: 500px;
+      }
+
+      .inline p {
+        width: fit-content;
+        display: inline;
+      }
+
+      .block p {
+        display: block;
+      }
+
+      .inline-block p {
+        display: inline-block;
+      }
+
+      .none p {
+        display: none;
+      }
+
+      .item {
+        width: 50px;
+        height: 50px;
+        background-color: aquamarine;
+        border: 1px solid navy;
+        opacity: 0.7;
+      }
+
+      .backdrop {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: burlywood;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Box Model</h1>
+    <div
+      class="inline-block"
+      style="border: dashed 1px black; background-color: bisque"
+    >
+      <p class="box" style="background-color: green; border: 20px solid orange">
+        Simple Box
+      </p>
+    </div>
+
+    <h1>CSS Didplay</h1>
+
+    <h2>inline</h2>
+    <div
+      class="inline"
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <p style="background-color: yellow">inline text 1</p>
+      <p style="background-color: orange">inline text 2</p>
+      <p style="background-color: red">inline text 3</p>
+      <p style="background-color: green">inline text 4</p>
+      <p style="background-color: purple">inline text 5</p>
+    </div>
+
+    <h2>block</h2>
+    <div
+      class="block"
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <p style="background-color: yellow">block text 1</p>
+      <p style="background-color: orange">block text 2</p>
+      <p style="background-color: red">block text 3</p>
+      <p style="background-color: green">block text 4</p>
+      <p style="background-color: purple">block text 5</p>
+    </div>
+
+    <h2>inline-block</h2>
+    <div
+      class="inline-block"
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <p>apple</p>
+      <p>orange</p>
+      <p>mango</p>
+      <p>watermelon</p>
+    </div>
+
+    <h2>none</h2>
+    <div
+      class="none"
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <p>apple</p>
+      <p>orange</p>
+      <p>watermelon</p>
+    </div>
+
+    <h2>display:none vs visibility:hidden</h2>
+    <div
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <p style="display: none">apple</p>
+      <p style="visibility: hidden">watermelon</p>
+    </div>
+
+    <h1>CSS Position</h1>
+
+    <h2>static</h2>
+    <div
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <div class="item" style="position: static"></div>
+    </div>
+
+    <h2>absolute</h2>
+
+    <h3>fixed width/height</h3>
+    <div
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <div
+        class="item"
+        style="position: absolute; width: 50px; height: 50px"
+      ></div>
+    </div>
+
+    <h3>no width/height</h3>
+    <div
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <div class="item" style="position: absolute"></div>
+    </div>
+
+    <h3>fixed width/height + right/top</h3>
+    <div
+      style="border: dashed 1px black; background-color: bisque; padding: 10px"
+    >
+      <div
+        style="
+            position: relative;
+          width: 600px;
+          height: 100px;
+          background-color: white;
+          border: 1px solid black;"
+      >
+        <div
+          style="
+            width: 25px;
+            height: 25px;
+            background-color: gray;
+            border-radius: 50%;
+            text-align: center;
+            vertical-align: middle;
+            position: absolute;
+            top: -10px;
+            right: -10px;"
+        >
+          X
+        </div>
+      </div>
+    </div>
+
+    <div class="backdrop">
+      <h2>Songkarn Festival 2023</h2>
+    </div>
+  </body>
 </html>
