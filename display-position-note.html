@@ -15,21 +15,21 @@
         width: 500px;
       }
 
-      .inline p {
+      .inline div{
         width: fit-content;
         display: inline;
+        margin-left:0;
+        margin-right: 0;
       }
 
       .block p {
         display: block;
+        margin-bottom: 0;
+        margin-top: 0;
       }
 
       .inline-block p {
         display: inline-block;
-      }
-
-      .none p {
-        display: none;
       }
 
       .item {
@@ -64,14 +64,14 @@
 
     <h2>inline</h2>
     <div
-      class="inline"
+      
       style="border: dashed 1px black; background-color: bisque; padding: 10px"
     >
-      <p style="background-color: yellow">inline text 1</p>
-      <p style="background-color: orange">inline text 2</p>
-      <p style="background-color: red">inline text 3</p>
-      <p style="background-color: green">inline text 4</p>
-      <p style="background-color: purple">inline text 5</p>
+      <div style="display: inline; background-color: yellow">inline text 1</div>
+      <div style="display: inline; background-color: orange">inline text 2</div>
+      <div style="display: inline; background-color: red">inline text 3</div>
+      <div style="background-color: green">inline text 4</div>
+      <div style="background-color: purple">inline text 5</div>
     </div>
 
     <h2>block</h2>
@@ -99,20 +99,24 @@
 
     <h2>none</h2>
     <div
-      class="none"
+    class="inline-block"
       style="border: dashed 1px black; background-color: bisque; padding: 10px"
     >
       <p>apple</p>
       <p>orange</p>
+      <p style="display: none">mango</p>
       <p>watermelon</p>
     </div>
 
     <h2>display:none vs visibility:hidden</h2>
     <div
+    class="inline-block"
       style="border: dashed 1px black; background-color: bisque; padding: 10px"
     >
       <p style="display: none">apple</p>
+      <p>orange</p>
       <p style="visibility: hidden">watermelon</p>
+      <p>mango</p>
     </div>
 
     <h1>CSS Position</h1>
@@ -140,7 +144,7 @@
     <div
       style="border: dashed 1px black; background-color: bisque; padding: 10px"
     >
-      <div class="item" style="position: absolute"></div>
+      <div class="item" style="position: absolute; width: unset; height: unset; padding-left: 100%;"></div>
     </div>
 
     <h3>fixed width/height + right/top</h3>
