@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Itim&display=swap"
+      rel="stylesheet"
+    />
+    <title>LAB8 Fetching data from API</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background: -webkit-linear-gradient(45deg, lightgrey,lightblue);
+        font-family: "Darumadrop One", cursive;
+        font-family: "Itim", cursive;
+      }
+      .title{
+        font-size: 48px;
+        font-weight: 1000;
+        color: whitesmoke;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .container{
+        background-color: white;
+        border-radius: 5px;
+        position: absolute;
+        left: 50%;
+        top: 100px;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 500px;
+        text-align: center;
+        padding: 10px;
+      }
+      .text{
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      #todo-input{
+        padding: 5px;
+        width: 200px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+      button{
+        margin-left: 10px;
+        color: white;
+        background-color: lightslategray;
+        padding: 5px;
+        border: 1px black solid;
+        border-radius: 5px;
+        width: 50px;
+        cursor: pointer;
+      }
+      button:hover{
+        color: black;
+        background-color: lightblue;
+        border: 1px navy solid;
+      }
+      #todo-list-container{
+        font-size: 20px;
+        background-color: lightgrey;
+        border: 5px;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">LAB8 Fetching data from API</div>
+    <div class="container">
+      <div class="text">Input below here</div>
+      <input type="text" id="todo-input" />
+      <button id="todo-add-button">Add</button>
+
+      <div id="todo-list-container"></div>
+    </div>
+
+    <audio id="sound" src="sound/game-comedy-interesting-playful-sweet-bright-childish-music-57040.mp3"></audio>
+  </body>
+
+  <script>
+    var CRUD_CURD_ID = "d245ea4f2c2d4b778b06a6d13b2ede13";
+    var CRUD_CURD_RESOURCE_NAME = "todo";
+    var CURD_CURD_API_ENDPOINT =
+      "https://crudcrud.com/api/" +
+      CRUD_CURD_ID +
+      "/" +
+      CRUD_CURD_RESOURCE_NAME;
+    // END:configuration zone
+
+    // BEGIN: application variables zone
+    var APPLICATION_STATE = {
+      todoList: [],
+    };
+    // END: application variables zone
+
+    // BEGIN: utility function zone
+    function htmlToElem(html) {
+      let temp = document.createElement("template");
+      html = html.trim(); // Never return a space text node as a result
+      temp.innerHTML = html;
+      return temp.content.firstChild;
+    }
+    // END: utility function zone
+
+    // BEGIN: API fetching zone
+    async function loadTodoList(afterLoadFunction) {
+      var headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      var requestOptions = {
+        method: "GET",
+        headers: headers,
+      };
+
+      await fetch(CURD_CURD_API_ENDPOINT, requestOptions).then(function (
+        response
+      ) {
+        response.json().then(function (data) {
+          afterLoadFunction(data);
+        });
+      });
+    }
+
+    function addNewTodoItem(value, afterAddFunction) {
+      var headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      var requestOptions = {
+        method: "POST",
+        body: JSON.stringify({
+          name: value,
+        }),
+        headers: headers,
+      };
+
+      fetch(CURD_CURD_API_ENDPOINT, requestOptions).then(function (response) {
+        response.json().then(function (data) {
+          afterAddFunction(data);
+        });
+      });
+    }
+
+    //function delete
+    function deleteTodoItem(id, afterDeleteFunction) {
+      var headers = new Headers();
+      headers.append("Content-Type", "application/json");
+
+      var requestOptions = {
+        method: "DELETE",
+        headers: headers,
+      };
+
+      fetch(CURD_CURD_API_ENDPOINT + "/" + id, requestOptions).then(
+        afterDeleteFunction
+      );
+    }
+
+    // END: API fetching zone
+
+    // BEGIN: UI Control and logic zone
+    function bindEvents() {
+      var addButtonElm = document.getElementById("todo-add-button");
+      addButtonElm.addEventListener("click", function () {
+        var inputElm = document.getElementById("todo-input");
+        var todoValue = inputElm.value;
+        inputElm.value = "";
+        if (todoValue !== "") {
+          addNewTodoItem(todoValue, function () {
+            sound("add");
+          });
+        }
+      });
+
+    }
+
+    function renderTodoList() {
+      var todoListElm = document.getElementById("todo-list-container");
+      todoListElm.innerHTML = ``;
+
+      for (var idx = 0; idx < APPLICATION_STATE.todoList.length; idx++) {
+        var todoItem = APPLICATION_STATE.todoList[idx];
+        var todoItemElm = htmlToElem(
+          '<div class="todo-item">' +
+            todoItem.name +
+            `<button onclick="deleteTodoItem('${todoItem._id}', ()=> sound('del'))">Delete</button></div>`
+        );
+        todoListElm.append(todoItemElm);
+      }
+    }
+
+    //Add By Y
+    const sound = (type) => {
+      const sound = document.getElementById(`sound`);
+
+      switch (type) {
+        case "add":
+          sound.src = "add.mp3";
+          sound.autoplay = true;
+          refreshTodoList();
+          break;
+        case "del":
+          sound.src = "del.mp3";
+          sound.autoplay = true;
+          refreshTodoList();
+          break;
+        case "delall":
+          sound.src = "deleteall.mp3";
+          sound.autoplay = true;
+          refreshTodoList();
+          break;
+      }
+    };
+
+    async function ClearAll() {
+      await fetch(CURD_CURD_API_ENDPOINT, {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) =>
+          data.forEach((element) => {
+            deleteTodoItem(element._id, () => sound("delall"));
+          })
+        );
+    }
+
+    const openModal = () => {
+      document.getElementById("AddModal").style.display = "block";
+    };
+
+    const closeModal = () => {
+      document.getElementById("AddModal").style.display = "none";
+    };
+    //
+
+    function refreshTodoList() {
+      loadTodoList(function (data) {
+        APPLICATION_STATE.todoList = data;
+        renderTodoList();
+      });
+    }
+
+    window.onload = function () {
+      bindEvents();
+      refreshTodoList();
+    };
+  </script>
+</html>

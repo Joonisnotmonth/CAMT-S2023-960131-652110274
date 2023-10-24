@@ -115,22 +115,22 @@
           var cardRank = CARD_NUMBER[random(CARD_NUMBER.length)]
         
 
-        if(cardType === '♦'){
-          cardElm.classList.add('diamond')
-        }
+          if(cardType === '♦'){
+            cardElm.classList.add('diamond')
+          }
 
-        else if(cardType === '♥'){
-          cardElm.classList.add('heart')
-        }
+          else if(cardType === '♥'){
+            cardElm.classList.add('heart')
+          }
 
-        else{
-          cardElm.classList.remove('heart')
-          cardElm.classList.remove('diamond')
-        }
+          else{
+            cardElm.classList.remove('heart')
+            cardElm.classList.remove('diamond')
+          }
 
-        cardTitleElm.innerHTML = cardType
-        cardBodyElm.innerHTML = cardRank
-      }
+          cardTitleElm.innerHTML = cardType
+          cardBodyElm.innerHTML = cardRank
+        }
       }
     </script>
   </body>
